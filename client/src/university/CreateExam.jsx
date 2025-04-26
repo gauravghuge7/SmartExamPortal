@@ -157,13 +157,13 @@ const CreateExam = () => {
     <UniversityDashboardLayout sidebarOpen={true} setSidebarOpen={true}>
 
       {/* Scrollable Main Content (Starts Immediately Below Navbar) */}
-      <div className="flex-1 ml-0 md:ml-64 pt-12 overflow-y-auto min-h-screen">
+      <div className="overflow-y-auto min-h-screen">
         <div className="p-0">
           <div className="max-w-5xl mx-auto">
             {/* Back Button */}
             <button
               onClick={handleBack}
-              className="mb-4 flex items-center text-green-700 hover:text-green-800 transition-all duration-200 px-6 pt-4"
+              className="cursor-pointer mb-4 flex items-center text-green-700 hover:text-green-800 transition-all duration-200 px-6 pt-4"
             >
               <svg
                 className="w-6 h-6 mr-2"

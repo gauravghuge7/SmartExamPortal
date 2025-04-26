@@ -7,9 +7,9 @@ const UniversityDashboardLayout = ({ sidebarOpen, setSidebarOpen, children }) =>
   const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('examUser');
     toast.success('Logged out successfully!');
-    navigate('/login');
+    navigate('/');
   };
 
   // Sidebar items
@@ -23,7 +23,7 @@ const UniversityDashboardLayout = ({ sidebarOpen, setSidebarOpen, children }) =>
   // Determine the active route
   const getActiveItem = () => {
     const path = location.pathname;
-    if (path.includes('exams')) return 'Exams';
+    if (path.includes('exams') || path.includes('examDetails') || path.includes('createExam') || path.includes('addQuestions')) return 'Exams';
     if (path.includes('students')) return 'Students';
     if (path.includes('profile')) return 'Profile';
     return 'Dashboard'; // Default to Dashboard
@@ -77,8 +77,8 @@ const UniversityDashboardLayout = ({ sidebarOpen, setSidebarOpen, children }) =>
 
       {/* Scrollable Main Content */}
       <div className="flex-1 ml-0 md:ml-64 pt-16 overflow-y-auto min-h-screen">
-        <div className="p-4 md:p-8">
-          <div className="max-w-5xl mx-auto space-y-8">
+        <div className="px-4 py-8 md:px-8">
+          <div className="max-w-5xl mx-auto w-full space-y-8">
             {children}
           </div>
         </div>

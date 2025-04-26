@@ -62,30 +62,11 @@ const UniversityProfile = () => {
     <UniversityDashboardLayout sidebarOpen={true} setSidebarOpen={true}>
 
       {/* Scrollable Main Content */}
-      <div className="flex-1 ml-0 md:ml-64 overflow-y-auto min-h-screen">
+      <div className="overflow-y-auto min-h-screen">
         <div className="p-6 md:p-8">
           <div className="max-w-5xl mx-auto space-y-8">
             {/* Back Button */}
-            <button
-              onClick={handleBack}
-              className="mb-6 flex items-center text-green-700 hover:text-green-800 transition-all duration-200"
-            >
-              <svg
-                className="w-6 h-6 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Back to Dashboard
-            </button>
-
+           
             {/* Header */}
             <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-8 text-green-700 tracking-tight">
               University Profile
