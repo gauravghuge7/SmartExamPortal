@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from './../services/axiosInstance';
 import { useParams } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import UniversityDashboardLayout from './UniversityDashboardLayout';
 
 const AssignExam = () => {
   const [searchInput, setSearchInput] = useState('');

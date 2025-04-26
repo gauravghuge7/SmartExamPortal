@@ -10,13 +10,13 @@ import contactus from './../../home/contactus';
 import StartTest from '../../student/Exam/StartTest';
 import TestView from '../../student/Exam/TestView';
 import StudentProtection from './../../layouts/StudentProtection';
-import MyExams from '../../student/MyExams';
-import StudentDashboard from "../../student/StudentDashboard";
+import StudentDashboard from "../../student/dashboardComponents/StudentDashboard";
 import AllExams from "../../student/dashboardComponents/AllExams";
 import StudentProfile from "../../student/dashboardComponents/StudentProfile";
 import ExamHistory from "../../student/dashboardComponents/ExamHistory";
 import CodingAssesment from "../../student/CodingAssesment";
-import ShowExamResult from "../../university/ShowExamResult"
+import ShowExamResult from "../../university/ShowExamResult";
+import Settings from "../../student/dashboardComponents/Settings";
 
 
 const StudentRouter = () => {
@@ -45,6 +45,7 @@ const StudentRouter = () => {
                 <Route path='/student/exam-history' element={<ExamHistory />}/>
                 <Route path='/student/exam/:examId' element={<ShowExamResult />}/>
                 <Route path='/student/profile' element={<StudentProfile />}/>
+                <Route path='/student/Settings' element={<Settings />}/>
 
 
                 

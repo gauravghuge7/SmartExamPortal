@@ -5,14 +5,14 @@ import SignUp from "../../pages/university/SignUp";
 import Login from "../../pages/university/Login";
 import ForgotPassword from "../../pages/university/ForgotPassword.jsx";
 import ResetPassword from '../../pages/university/ResetPassword';
-import CreateExam from '../../pages/university/CreateExam';
-import AddQuestions from '../../pages/university/AddQuestions';
+import CreateExam from '../../university/CreateExam';
+import AddQuestions from '../../university/AddQuestions';
 import TotalExams from './../../university/TotalExams';
 import ViewExamDetail from './../../university/ViewExamDetail';
 import UniversityDashboard from './../../university/UniversityDashboard';
 import UniversityProtection from './../../layouts/UniversityProtection';
 import ShowAllStudents from './../../university/ShowAllStudents'; 
-import UniversityProfile from '../../pages/university/UniversityProfile';
+import UniversityProfile from '../../university/UniversityProfile';
 import ShowExamInfo from '../../university/ShowExamInfo';   // // This Component is to view the info about the exams that the student has taken
 import ShowExamResult from '../../university/ShowExamResult';
 
