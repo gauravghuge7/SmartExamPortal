@@ -59,7 +59,7 @@ const AllExams = ({ sidebarOpen, setSidebarOpen }) => {
       <StudentDashboardLayout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
 
         {/* Main Content */}
-        <div className="flex-1 p-6 mt-10  md:mt-0">
+        <div className="  md:mt-0">
           <div className="max-w-4xl mx-auto mt-10 space-y-6">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">All Exams</h2>
