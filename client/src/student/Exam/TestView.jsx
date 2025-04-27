@@ -7,6 +7,7 @@ import * as faceapi from 'face-api.js';
 import RichTextEditor from './RichTextEditor';
 
 const TestView = () => {
+  console.log("TestView.jsx is running");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [warningCount, setWarningCount] = useState(0);
   const [lastWarningTime, setLastWarningTime] = useState(null);
