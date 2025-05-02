@@ -13,7 +13,6 @@ import StudentDashboard from "../../student/dashboardComponents/StudentDashboard
 import AllExams from "../../student/dashboardComponents/AllExams";
 import StudentProfile from "../../student/dashboardComponents/StudentProfile";
 import ExamHistory from "../../student/dashboardComponents/ExamHistory";
-import ShowExamResult from "../../university/ShowExamResult";
 import Settings from "../../student/dashboardComponents/Settings";
 import McqExam from "../../student/Exam/McqExam";
 import CodingExam from "../../student/Exam/CodingExam";
@@ -41,7 +40,6 @@ const StudentRouter = () => {
                 <Route path='/student/dashboard' element={<StudentDashboard />}/>
                 <Route path='/student/myExams' element={<AllExams />}/>
                 <Route path='/student/exam-history' element={<ExamHistory />}/>
-                <Route path='/student/exam/:examId' element={<ShowExamResult />}/>
                 <Route path='/student/profile' element={<StudentProfile />}/>
                 <Route path='/student/Settings' element={<Settings />}/>
 

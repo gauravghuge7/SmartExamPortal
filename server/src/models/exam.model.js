@@ -55,8 +55,10 @@ const examSchema = new Schema({
         ref: "Student",
     }],
 
-
-
+    isSubmitted: {
+        type: Boolean,
+        default: false,
+    }
 
 }, {
     timestamps  : true

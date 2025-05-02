@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 
 const universitySchema = new Schema({
 
-
-
     universityName: {
         type: String,
         required: true,
@@ -43,7 +41,6 @@ const universitySchema = new Schema({
         }
     }
 
-
 })
 
 
@@ -58,7 +55,7 @@ universitySchema.pre('save', async function(next) {
 
 universitySchema.methods = {
 
-    async comparePassword(password) {
+    comparePassword : async function(password) {
         return await bcrypt.compare(password, this.universityPassword);
     },
 

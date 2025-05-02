@@ -15,18 +15,20 @@ const getMyExams = asyncHandler(async (req, res, next) => {
     try {
         const { _id } = req.student;
 
-        // const exams = await Exam.find({
-        //     students: new mongoose.Types.ObjectId(_id),
-        // })
 
         const exams = await Exam.find({
-            students: {
-              $elemMatch: {
-                _id: new mongoose.Types.ObjectId(_id),
-                isSubmitted: false
-              }
-            }
-        });
+            students: new mongoose.Types.ObjectId(_id),
+            isSubmitted: false
+        })
+
+        // const exams = await Exam.find({
+        //     students: {
+        //       $elemMatch: {
+        //         _id: new mongoose.Types.ObjectId(_id),
+        //         isSubmitted: false
+        //       }
+        //     }
+        // });
 
         console.log("id :",_id);
         console.log("exams :",exams);
