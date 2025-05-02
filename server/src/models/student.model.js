@@ -58,7 +58,11 @@ const studentSchema = new Schema({
     },
 
     
-
+    exams: [{
+        type: Schema.Types.ObjectId,
+        ref: "Exam",
+        default: []
+    }],
 
 }, 
 {

@@ -1,7 +1,7 @@
 
 import { Schema, model } from 'mongoose';
 
-const studentExamSchema = new Schema({
+const studentResultSchmea = new Schema({
 
     student: {
         type: Schema.Types.ObjectId,
@@ -11,14 +11,10 @@ const studentExamSchema = new Schema({
     
     exam: {
         type: Schema.Types.ObjectId,
-        ref: "Question",
+        ref: "Exam",
         required: true,
     },
     
-    answers: {
-        type: Schema.Types.ObjectId,
-        ref: "StudentAnswers",
-    },
 
     examStatus: {
         type: String,
@@ -27,7 +23,6 @@ const studentExamSchema = new Schema({
 
     examScore: {
         type: Number,
-        required: true,
     },
 
     examMarks: {
@@ -37,7 +32,6 @@ const studentExamSchema = new Schema({
 
     examDurationByStudent: {
         type: Number,
-        required: true,
     },
 
     totalQuestionsSolved: {
@@ -49,4 +43,4 @@ const studentExamSchema = new Schema({
 })
 
 
-export const StudentExam = model('StudentExam', studentExamSchema);
+export const StudentResult = model('StudentResult', studentResultSchmea);

@@ -124,15 +124,13 @@ const TotalExams = () => {
                           </p>
                         </div>
                         <div className="flex items-center space-x-4 mt-4 sm:mt-0">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              exam.status === 'Scheduled'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-green-100 text-green-800'
-                            }`}
+                     
+                          <Link
+                            to={`/university/exam/dashboard/${exam._id}`}
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
                           >
-                            {exam.status || 'Scheduled'}
-                          </span>
+                            View Dashboard
+                          </Link>
                           <Link
                             to={`/university/addQuestions/${exam._id}`}
                             className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-3 py-1 rounded-lg transition-all duration-200"

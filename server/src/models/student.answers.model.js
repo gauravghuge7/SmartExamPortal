@@ -22,6 +22,8 @@ const studentAnswersSchema = new Schema({
         required: true,
     },
 
+    
+
     answerText: {
         type: String,
         required: true,
@@ -40,6 +42,7 @@ const studentAnswersSchema = new Schema({
     isCorrect: {
         type: Boolean,
         required: true,
+        default: false,
     },
 
     isAnswered: {
