@@ -45,6 +45,10 @@ const studentExamSchema = new Schema({
         default: 0,
     },
 
+    isSubmitted: {
+        type: Boolean,
+        default: false,
+    }
     
 })
 

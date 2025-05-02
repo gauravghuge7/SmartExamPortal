@@ -15,12 +15,23 @@ const getMyExams = asyncHandler(async (req, res, next) => {
     try {
         const { _id } = req.student;
 
+        // const exams = await Exam.find({
+        //     students: new mongoose.Types.ObjectId(_id),
+        // })
+
         const exams = await Exam.find({
-            students: new mongoose.Types.ObjectId(_id),
-        })
+            students: {
+              $elemMatch: {
+                _id: new mongoose.Types.ObjectId(_id),
+                isSubmitted: false
+              }
+            }
+        });
 
         console.log("id :",_id);
         console.log("exams :",exams);
+
+
 
         return res
         .status(200)
@@ -451,8 +462,8 @@ const submitExam = asyncHandler(async (req, res, next) => {
             examStatus: "pending",
             examScore: totalMarks,
             examDurationByStudent: 1,
-            totalQuestionsSolved
-            
+            totalQuestionsSolved,
+            isSubmitted: true
         })
         
         return res
