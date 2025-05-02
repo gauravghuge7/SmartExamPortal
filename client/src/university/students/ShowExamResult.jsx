@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import axiosInstance from '../services/axiosInstance'; // Adjust path
+import axiosInstance from '../../services/axiosInstance'; // Adjust path
 import toast, { Toaster } from 'react-hot-toast';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
-import UniversityDashboardLayout from './UniversityDashboardLayout';
+import UniversityDashboardLayout from '../dashboard/UniversityDashboardLayout';
 
 // Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);

@@ -15,9 +15,9 @@ const Navbar = () => {
 
   const universityNavLinks = [
     { to: '/university/dashboard', label: 'Dashboard' },
-    { to: '/university/exams', label: 'Examinations' },
-    { to: '/university/departments', label: 'Departments' },
-    { to: '/university/reports', label: 'Reports' },
+    { to: '/university/exams', label: 'Exams' },
+    { to: '/university/students', label: 'Students' },
+    { to: '/university/profile', label: 'Profile' },
   ];
 
   const guestNavLinks = [
@@ -37,7 +37,7 @@ const Navbar = () => {
     localStorage.removeItem("examUser");
     setIsLoggedIn(false);
     window.location.href = '/';
-  }
+  };
 
   const navLinks = isLoggedIn
     ? userRole === 'student'
@@ -51,17 +51,17 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-12">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link 
-              to="/" 
-              className="text-green-600 text-lg font-semibold hover:text-green-700 transition-colors duration-200"
+            <Link
+              to="/"
+              className="text-green-600 text-lg font-semibold hover:text-green-700 transition-colors duration-200 truncate"
             >
               Exam Portal
             </Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-6 flex items-center space-x-4">
+          <div className="">
+            <div className="hidden ml-6 flex items-center space-x-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
@@ -72,7 +72,9 @@ const Navbar = () => {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
                 </Link>
               ))}
-              {isLoggedIn && (
+              
+            </div>
+            {isLoggedIn && (
                 <button
                   className="text-gray-700 hover:text-white hover:bg-green-600 px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 border border-green-600"
                   onClick={handleLogout}
@@ -80,7 +82,6 @@ const Navbar = () => {
                   Logout
                 </button>
               )}
-            </div>
           </div>
 
           {/* Mobile menu button */}
@@ -106,20 +107,20 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-md">
+        <div className="md:hidden bg-white shadow-md transition-all duration-300 ease-in-out max-h-screen overflow-y-auto">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-gray-700 hover:bg-green-50 hover:text-green-600 block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                className="text-gray-700 hover:bg-green-50 hover:text-green-600 block px-3 py-3 rounded-md text-sm font-medium transition-colors duration-200 truncate"
               >
                 {link.label}
               </Link>
             ))}
             {isLoggedIn && (
               <button
-                className="text-gray-700 hover:bg-green-50 hover:text-green-600 block px-3 py-2 rounded-md text-sm font-medium w-full text-left transition-colors duration-200"
+                className="text-gray-700 hover:bg-green-50 hover:text-green-600 block px-3 py-3 rounded-md text-sm font-medium w-full text-left transition-colors duration-200"
                 onClick={handleLogout}
               >
                 Logout

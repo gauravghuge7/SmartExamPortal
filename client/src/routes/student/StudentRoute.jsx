@@ -15,7 +15,7 @@ import AllExams from "../../student/dashboardComponents/AllExams";
 import StudentProfile from "../../student/dashboardComponents/StudentProfile";
 import ExamHistory from "../../student/dashboardComponents/ExamHistory";
 import CodingAssesment from "../../student/CodingAssesment";
-import ShowExamResult from "../../university/ShowExamResult";
+import ShowExamResult from "../../university/students/ShowExamResult";
 import Settings from "../../student/dashboardComponents/Settings";
 
 
