@@ -7,7 +7,6 @@ import { Question } from './../../models/question.model.js';
 import mongoose from "mongoose";
 import { Student } from './../../models/student.model.js';
 import { University } from "../../models/university.model.js";
-import { StudentExam } from './../../models/student.exam.model.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 
