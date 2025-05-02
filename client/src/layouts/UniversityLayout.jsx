@@ -16,7 +16,6 @@ function UniversityLayout() {
         </main>   
 
         <footer>
-            <Footer />
         </footer>
   
   

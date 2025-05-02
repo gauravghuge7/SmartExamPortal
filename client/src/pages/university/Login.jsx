@@ -38,7 +38,7 @@ const Login = () => {
       if (response.status === 200) {
         toast.success("Login successful!", { autoClose: 2000 });
         localStorage.setItem("examUser", "university");
-        setTimeout(() => navigate("/university"), 2000);
+        setTimeout(() => window.location.href = "/university", 2000);
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong!");

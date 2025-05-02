@@ -60,7 +60,7 @@ const registerUniversity = asyncHandler( async (req, res, next) => {
         const university = await University.create({
             universityName,
             universityAddress,
-            universityEmail,
+            universityEmail : universityEmail.toLowerCase().trim(),
             universityPhone,
             universityPassword,
             universityLogo: {
@@ -69,6 +69,7 @@ const registerUniversity = asyncHandler( async (req, res, next) => {
             }
         })
         
+        console.log("university => ", university)
 
         return res
         .status(200)
@@ -120,8 +121,9 @@ const loginUniversity = asyncHandler( async (req, res, next) => {
             throw new ApiError(400, "University not found");
         }
 
-
-        if(!university.comparePassword(universityPassword)) {
+        const ispasswordMatch = await university.comparePassword(universityPassword);
+        
+        if(!ispasswordMatch) {
             throw new ApiError(400, "Invalid password");
         }
 
@@ -146,7 +148,7 @@ const loginUniversity = asyncHandler( async (req, res, next) => {
         
     } 
     catch (error) {
-        throw new ApiError(500, error?.message);    
+        throw new ApiError(error?.statusCode || 500, error?.message);    
     }
 })
 

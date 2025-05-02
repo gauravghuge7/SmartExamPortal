@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
-const UniversityDashboardLayout = ({ sidebarOpen, setSidebarOpen, children }) => {
+const UniversityDashboardLayout = ({children}) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('examUser');
@@ -41,7 +43,7 @@ const UniversityDashboardLayout = ({ sidebarOpen, setSidebarOpen, children }) =>
           sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
-        <div className="pt-16 p-6 border-b border-green-500">
+        <div className=" flex gap-2 justify-between mt-16 m-4  border-b border-green-500">
           <h2 className="text-2xl font-bold">Admin Panel</h2>
         </div>
         <nav className="mt-4">

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from './../services/axiosInstance';
+import axiosInstance from '../../services/axiosInstance';
 import toast, { Toaster } from 'react-hot-toast';
-import UniversityDashboardLayout from './UniversityDashboardLayout';
+import UniversityDashboardLayout from '../dashboard/UniversityDashboardLayout';
 
 const TotalExams = () => {
   const navigate = useNavigate();

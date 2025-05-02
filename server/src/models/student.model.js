@@ -68,9 +68,9 @@ const studentSchema = new Schema({
 
 studentSchema.pre('save', async function(next) {
 
-  if(this.isModified("studentPassword")) {
-      this.studentPassword = await bcrypt.hash(this.studentPassword, 10);
-  }
+    if(this.isModified("studentPassword")) {
+        this.studentPassword = await bcrypt.hash(this.studentPassword, 10);
+    }
 
   next();
 })
