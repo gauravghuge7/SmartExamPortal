@@ -366,7 +366,7 @@ const StartTest = ({ onStartTest }) => {
     if (cameraStatus === 'working' && micStatus === 'working' && isCompatible && isFaceVerified) {
       setError('');
       showToaster('Starting examination...', 'success');
-      navigate(`/exam/view/${id}`);
+      navigate(`/exam/view/mcq/${id}`); 
     } else {
       setError('Please complete camera, microphone, compatibility, and face verification');
       showToaster('Please complete all verifications.', 'error');

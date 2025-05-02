@@ -8,15 +8,15 @@ import LandingPage from './../../home/Landingpage';
 import Aboutus from './../../home/Aboutus';
 import contactus from './../../home/contactus';
 import StartTest from '../../student/Exam/StartTest';
-import TestView from '../../student/Exam/TestView';
 import StudentProtection from './../../layouts/StudentProtection';
 import StudentDashboard from "../../student/dashboardComponents/StudentDashboard";
 import AllExams from "../../student/dashboardComponents/AllExams";
 import StudentProfile from "../../student/dashboardComponents/StudentProfile";
 import ExamHistory from "../../student/dashboardComponents/ExamHistory";
-import CodingAssesment from "../../student/CodingAssesment";
 import ShowExamResult from "../../university/ShowExamResult";
 import Settings from "../../student/dashboardComponents/Settings";
+import McqExam from "../../student/Exam/McqExam";
+import CodingExam from "../../student/Exam/CodingExam";
 
 
 const StudentRouter = () => {
@@ -24,8 +24,6 @@ const StudentRouter = () => {
         <Routes > 
             <Route path="/" element={<StudentLayout />}>
 
-                {/* Route for Testing */}
-                <Route path="/coding" element={<CodingAssesment />} />
 
                 <Route path="/student/SignUp" element={<SignUp />} />
                 <Route path="/student/Login" element={<Login />} />
@@ -56,7 +54,8 @@ const StudentRouter = () => {
             <Route path="/" element={<StudentProtection />}>
                 {/* Student Test Routes Exams Here */}
                 <Route path='/exam/start/:id' element={<StartTest />}/>
-                <Route path='/exam/view/:id' element={<TestView />}/>
+                <Route path='/exam/view/mcq/:id' element={<McqExam />}/>
+                <Route path='/exam/view/coding/:id' element={<CodingExam />}/>
             </Route>
             
         </Routes>
