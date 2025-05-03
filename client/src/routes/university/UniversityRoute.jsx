@@ -14,6 +14,7 @@ import UniversityProfile from './../../university/profile/UniversityProfile';
 import ShowExamResult from './../../university/students/ShowExamResult';
 import UniversityDashboard from './../../university/dashboard/UniversityDashboard';
 import ViewExamDetail from './../../university/exams/ViewExamDetail';
+import ExamDashboard from './../../university/exams/examDashboard/ExamDashboard';
 
 
 
@@ -38,8 +39,9 @@ function UniversityRouter() {
             <Route index element={<TotalExams />} />
             <Route path="/exams" element={<TotalExams />} />
             <Route path="/examDetails/:examId" element={<ViewExamDetail />} />
+            <Route path="/exam/dashboard/:examId" element={<ExamDashboard />} />
             <Route path="/createExam" element={<CreateExam />} />
-            <Route path="/exam/dashboard" element={<CreateExam />} />
+            
             <Route path="/addQuestions/:examId" element={<AddQuestions />} />
 
 

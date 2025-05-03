@@ -203,7 +203,7 @@ const MCQExam = () => {
       const response = await axiosInstance.post(`/student/exam/submitExam/${id}`);
       console.log('Exam submitted successfully:', response?.data);
       setShowToast(true);
-      navigate('/exam/result', { replace: true });
+      navigate(`/student/exam-history/${examId}`, { replace: true });
     } catch (err) {
       console.error('Error submitting exam:', err);
       const status = err?.response?.status;
