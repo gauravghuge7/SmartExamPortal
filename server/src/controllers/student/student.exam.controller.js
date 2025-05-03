@@ -18,7 +18,6 @@ const getMyExams = asyncHandler(async (req, res, next) => {
 
         const exams = await Exam.find({
             students: new mongoose.Types.ObjectId(_id),
-            isSubmitted: false
         })
 
         // const exams = await Exam.find({
