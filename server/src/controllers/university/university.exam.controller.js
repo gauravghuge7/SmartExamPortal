@@ -240,6 +240,43 @@ const getExamDetails = asyncHandler( async (req, res, next) => {
     }
 })
 
+const assignExam = asyncHandler( async (req, res, next) => {
+
+    try {
+
+        const { examId } = req.params;
+        const { studentIds } = req.body;
+        const students = studentIds;
+    
+        const exam = await Exam.findById(examId);
+        
+        if(!exam) {
+            throw new ApiError(404, "Exam not found");
+        }
+
+        exam.students.push(...students);
+
+        await exam.save();
+
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200, 
+                "Exam assigned successfully", 
+                {
+                    exam
+                }
+            )
+        )
+        
+    } 
+    catch (error) {
+        throw new ApiError(500, error.message)
+    }
+
+})
+
 
 const getOldQuestions = asyncHandler( async (req, res, next) => {
     try {
@@ -263,8 +300,6 @@ const getOldQuestions = asyncHandler( async (req, res, next) => {
         return next(error);
     }
 })
-
-
 
 
 const getExanDashboard = asyncHandler( async (req, res, next) => {
@@ -345,42 +380,92 @@ const getExanDashboard = asyncHandler( async (req, res, next) => {
 })
 
 
-const assignExam = asyncHandler( async (req, res, next) => {
-
+const getStudentsParticipatingExam = asyncHandler(async (req, res, next) => {
     try {
-
         const { examId } = req.params;
-        const { studentIds } = req.body;
-        const students = studentIds;
-    
         const exam = await Exam.findById(examId);
         
         if(!exam) {
             throw new ApiError(404, "Exam not found");
         }
+        
+        const students = await Exams.aggregate([
+            {
+                $match: {
+                    _id: new mongoose.Types.ObjectId(examId),
+                }
+            },
 
-        exam.students.push(...students);
+            {
+                $lookup: {
+                    from: "students",
+                    localField: "students",
+                    foreignField: "_id",
+                    as: "students",
 
-        await exam.save();
+                    pipeline: [
+                        {
+                            $lookup: {
+                                from: "studentResults",
+                                localField: "_id",
+                                foreignField: "student",
+                                as: "studentResults"
+                            }
+                        }, 
+                        {
+                            $addFields: {
+                                studentResults: "$studentResults"
+                            }
+                        }
+                    ]
+                }
+            }, 
+            {
+                $addFields: {
+                    studentResults: "$studentResults",
+                }
+            },
 
+            {
+                $group: {
+                    _id: "$students",
+                    students: { $push: "$studentResults" }
+
+                }
+            },
+            
+            {
+                $project: {
+                    _id: 0,
+                    students: 1,
+                    examName: 1,
+                    examDate: 1,
+                    examTime: 1,
+                    examQualification: 1,
+                    examResults: 1,
+                }
+            }
+        ])
+        
         return res
         .status(200)
         .json(
             new ApiResponse(
                 200, 
-                "Exam assigned successfully", 
+                "Students retrieved successfully", 
                 {
-                    exam
+                    students
                 }
             )
-        )
+        )     
         
-    } 
+    }
     catch (error) {
         throw new ApiError(500, error.message)
     }
 
 })
+
 
 
 const getAllStudents = asyncHandler(async (req, res, next) => {
