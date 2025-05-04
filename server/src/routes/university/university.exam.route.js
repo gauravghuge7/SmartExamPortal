@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addQuestions, assignExam, createExam, getAllExams, getAllStudents, getExanDashboard, getOldQuestions, getUniversityDashboard, removeQuestion, getAiDescription, getStudent , getStudentExamDetails } from "../../controllers/university/university.exam.controller.js";
+import { addQuestions, assignExam, createExam, getAllExams, getAllStudents, getExamDashboard, getOldQuestions, getUniversityDashboard, removeQuestion, getAiDescription, getStudent , getStudentExamDetails, getExamDetails, getStudentsParticipatingExam, getDashboardOfExam } from "../../controllers/university/university.exam.controller.js";
 import { upload } from "../../middlewares/multer.middleware.js";
 import { isUniversityLogin } from "../../middlewares/university.middleware.js";
 
@@ -28,11 +28,32 @@ examRouter.route("/getAllExams")
     getAllExams
 )
 
+examRouter.route("/getExamDetails/:examId")
+.get(
+    isUniversityLogin,
+    upload.none(),
+    getExamDetails
+)
+
+examRouter.route("/getStudentRanking/:examId")
+.get(
+    isUniversityLogin,
+    upload.none(),
+    getStudentsParticipatingExam
+)
+
+examRouter.route("/getDashboardOfExam/:examId")
+.get(
+    isUniversityLogin,
+    upload.none(),
+    getDashboardOfExam
+)
+
 examRouter.route("/getExamDashboard/:examId")
 .get(
     isUniversityLogin,
     upload.none(),
-    getExanDashboard
+    getExamDashboard
 )
 
 

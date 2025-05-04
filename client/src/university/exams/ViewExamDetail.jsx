@@ -40,8 +40,7 @@ const ViewExamDetail = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-gradient-to-br from-gray-100 to-green-100 items-center justify-center">
-        <Toaster />
+      <div className="flex min-h-screen bg-gray-100 items-center justify-center">
         <p className="text-green-700 text-lg font-medium animate-pulse">Loading exam details...</p>
       </div>
     );
@@ -49,7 +48,7 @@ const ViewExamDetail = () => {
 
   if (error) {
     return (
-      <div className="flex min-h-screen bg-gradient-to-br from-gray-100 to-green-100 items-center justify-center">
+      <div className="flex min-h-screen bg-gray-100 items-center justify-center">
         <Toaster />
         <p className="text-red-500 text-lg font-medium">{error}</p>
       </div>
@@ -58,9 +57,9 @@ const ViewExamDetail = () => {
 
   if (!examData) {
     return (
-      <div className="flex min-h-screen bg-gradient-to-br from-gray-100 to-green-100 items-center justify-center">
+      <div className="flex min-h-screen bg-gray-100 items-center justify-center">
         <Toaster />
-        <p className="text-green-700 text-lg font-medium">No exam data found.</p>
+        <p className="text-gray-700 text-lg font-medium">No exam data found.</p>
       </div>
     );
   }
@@ -89,8 +88,8 @@ const ViewExamDetail = () => {
           </div>
 
           {/* Exam Overview */}
-          <section className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="px-6 py-5 bg-gradient-to-r from-green-600 to-green-500 text-white">
+          <section className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="px-6 py-5 bg-green-600 text-white rounded-t-xl">
               <h2 className="text-2xl font-semibold">Exam Overview</h2>
             </div>
             <div className="px-6 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -105,13 +104,41 @@ const ViewExamDetail = () => {
             </div>
           </section>
 
+          {/* Assign Exam */}
+          <section className="bg-white rounded-xl shadow-md p-6">
+            <h3 className="text-2xl font-semibold text-green-700 mb-4">Assign Exam</h3>
+            <AssignExam />
+          </section>
+
+          {/* Students Assigned */}
+          <section className="bg-white rounded-xl shadow-md p-6">
+            <h3 className="text-2xl font-semibold text-green-700 mb-4">Assigned Students</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Chart */}
+              <div className="flex flex-col items-center justify-end h-40">
+                <div
+                  className="w-12 bg-green-600 rounded-t transition-all"
+                  style={{ height: `${Math.min(100, (examData.students?.length || 0) * 2)}%` }}
+                ></div>
+                <span className="text-sm text-gray-600 mt-2">Students</span>
+              </div>
+
+              {/* Metrics */}
+              <div className="col-span-2 grid grid-cols-2 gap-4">
+                <MetricCard title="Total Assigned" value={examData.students?.length || 0} />
+                <MetricCard title="Available Slots" value={Math.max(0, 50 - (examData.students?.length || 0))} />
+              </div>
+            </div>
+          </section>
+
           {/* Questions */}
           {examData.questions?.length > 0 && (
-            <section className="bg-white rounded-xl shadow-lg p-6">
+            <section className="bg-white rounded-xl shadow-md p-6">
               <h3 className="text-2xl font-semibold text-green-700 mb-4">Questions</h3>
               <div className="space-y-4">
                 {examData.questions.map((q, index) => (
-                  <div key={q._id} className="border border-green-200 rounded-lg p-4 bg-gray-50 shadow-sm">
+                  <div key={q._id} className="border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
                     <p className="text-sm text-green-600">Question {index + 1} ({q.questionLevel})</p>
                     <h4 className="text-lg font-medium mt-1">{q.questionTitle}</h4>
                     <p className="text-gray-700 mt-2">{q.questionDescription}</p>
@@ -128,34 +155,6 @@ const ViewExamDetail = () => {
               </div>
             </section>
           )}
-
-          {/* Students Assigned */}
-          <section className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-2xl font-semibold text-green-700 mb-4">Assigned Students</h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Chart */}
-              <div className="flex flex-col items-center justify-end h-40">
-                <div
-                  className="w-16 bg-green-500 rounded-t-lg transition-all"
-                  style={{ height: `${Math.min(100, (examData.students?.length || 0) * 2)}%` }}
-                ></div>
-                <span className="text-sm text-gray-700 mt-2">Students</span>
-              </div>
-
-              {/* Metrics */}
-              <div className="col-span-2 grid grid-cols-2 gap-4">
-                <MetricCard title="Total Assigned" value={examData.students?.length || 0} color="green" />
-                <MetricCard title="Available Slots" value={Math.max(0, 50 - (examData.students?.length || 0))} color="yellow" />
-              </div>
-            </div>
-          </section>
-
-          {/* Assign Exam */}
-          <section className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-2xl font-semibold text-green-700 mb-4">Assign Exam</h3>
-            <AssignExam />
-          </section>
         </div>
       </div>
     </UniversityDashboardLayout>
@@ -164,27 +163,29 @@ const ViewExamDetail = () => {
 
 export default ViewExamDetail;
 
-// ---------------------------
-// ✅ Helper Components
-// ---------------------------
+
+
 const InfoField = ({ label, value, isLarge = false }) => (
   <div>
-    <p className="text-sm font-medium text-green-700">{label}</p>
+    <p className="text-sm font-medium text-gray-600">{label}</p>
     <p className={`mt-1 text-gray-800 ${isLarge ? 'bg-gray-100 p-3 rounded-lg text-base' : 'text-lg'}`}>
       {value}
     </p>
   </div>
 );
 
-const MetricCard = ({ title, value, color }) => {
-  const colorMap = {
-    green: "bg-green-50 text-green-700 border-green-200",
-    yellow: "bg-yellow-50 text-yellow-700 border-yellow-200",
-  };
-  return (
-    <div className={`p-4 rounded-lg border ${colorMap[color]} shadow-sm`}>
-      <p className="text-sm font-medium">{title}</p>
-      <p className="text-2xl font-bold mt-1">{value}</p>
-    </div>
-  );
-};
+const MetricCard = ({ title, value }) => (
+  <div className="p-4 rounded-lg border border-gray-200 bg-gray-50 shadow-sm">
+    <p className="text-sm font-medium text-gray-600">{title}</p>
+    <p className="text-2xl font-bold text-green-700 mt-1">{value}</p>
+  </div>
+);
+
+const OverviewRow = ({ label, value, isMultiLine = false }) => (
+  <div className="grid grid-cols-12 gap-4">
+    <dt className="col-span-3 text-sm font-medium text-gray-600">{label}:</dt>
+    <dd className={`col-span-9 text-gray-800 ${isMultiLine ? 'whitespace-pre-line bg-gray-50 p-3 rounded-md' : ''}`}>
+      {value}
+    </dd>
+  </div>
+);

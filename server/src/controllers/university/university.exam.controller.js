@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { Student } from './../../models/student.model.js';
 import { University } from "../../models/university.model.js";
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { StudentResult } from "../../models/student.result.model.js";
 
 
 const createExam = asyncHandler( async (req, res, next) => {
@@ -218,9 +219,9 @@ const getAllExams = asyncHandler( async (req, res, next) => {
 const getExamDetails = asyncHandler( async (req, res, next) => {
     try {
         
-        const { exam } = req.body;
+        const { examId } = req.params;
         
-        const examDetails = await Exam.findById(exam);
+        const examDetails = await Exam.findById(examId);
         
         return res
         .status(200)
@@ -302,7 +303,7 @@ const getOldQuestions = asyncHandler( async (req, res, next) => {
 })
 
 
-const getExanDashboard = asyncHandler( async (req, res, next) => {
+const getExamDashboard = asyncHandler( async (req, res, next) => {
     try {
         
         const { _id } = req.university;
@@ -389,7 +390,7 @@ const getStudentsParticipatingExam = asyncHandler(async (req, res, next) => {
             throw new ApiError(404, "Exam not found");
         }
         
-        const students = await Exams.aggregate([
+        const students = await Exam.aggregate([
             {
                 $match: {
                     _id: new mongoose.Types.ObjectId(examId),
@@ -406,43 +407,38 @@ const getStudentsParticipatingExam = asyncHandler(async (req, res, next) => {
                     pipeline: [
                         {
                             $lookup: {
-                                from: "studentResults",
-                                localField: "_id",
+                                from: "studentresults",
                                 foreignField: "student",
+                                localField: "_id",
                                 as: "studentResults"
                             }
                         }, 
                         {
                             $addFields: {
-                                studentResults: "$studentResults"
+                                studentResults: "$studentResults",
                             }
                         }
                     ]
                 }
             }, 
-            {
-                $addFields: {
-                    studentResults: "$studentResults",
-                }
-            },
 
-            {
-                $group: {
-                    _id: "$students",
-                    students: { $push: "$studentResults" }
-
-                }
-            },
-            
             {
                 $project: {
                     _id: 0,
-                    students: 1,
                     examName: 1,
                     examDate: 1,
                     examTime: 1,
                     examQualification: 1,
                     examResults: 1,
+                    students: {
+                        _id : 1,
+                        studentName : 1,
+                        studentEmail : 1,
+                        studentPhone : 1,
+                        studentAddress : 1,
+                        studentResults: 1,
+                        
+                    }
                 }
             }
         ])
@@ -467,29 +463,124 @@ const getStudentsParticipatingExam = asyncHandler(async (req, res, next) => {
 })
 
 
-
-const getAllStudents = asyncHandler(async (req, res, next) => {
+const getDashboardOfExam = asyncHandler( async (req, res, next) => {
     try {
 
-        const students = await Student.find();
+        const { examId } = req.params;
+        
+        const exam = await Exam.findById(examId);
+        
+        if(!exam) {
+            throw new ApiError(404, "Exam not found");
+        }
+
+        const students = await Exam.aggregate([
+            {
+                $match: {
+                    _id: new mongoose.Types.ObjectId(examId),
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "students",
+                    localField: "students",
+                    foreignField: "_id",
+                    as: "students",
+
+                    pipeline: [
+                        {
+                            $lookup: {
+                                from: "studentresults",
+                                foreignField: "student",
+                                localField: "_id",
+                                as: "studentResults"
+                            }
+                        }, 
+                        {
+                            $addFields: {
+                                studentResults: "$studentResults",
+                            }
+                        }
+                    ]
+                }
+            }, 
+
+            {
+                $project: {
+                    _id: 0,
+                    examName: 1,
+                    examDate: 1,
+                    examTime: 1,
+                    examQualification: 1,
+                    examResults: 1,
+                    students: {
+                        _id : 1,
+                        studentName : 1,
+                        studentEmail : 1,
+                        studentPhone : 1,
+                        studentAddress : 1,
+                        studentResults: 1,
+                        
+                    }
+                }
+            }
+        ])
+
+        const attemptedStudents = await Student.countDocuments({ exams: examId });
+        const totalStudents = await Student.countDocuments();
+
+        const questions = await Question.find({ exam: examId });
+        
+        let easyQuestions = 0;
+        let mediumQuestions = 0;
+        let hardQuestions = 0;
+
+        questions.forEach(question => {
+            if(question.questionLevel === "Easy") {
+                easyQuestions++;
+            }
+            else if(question.questionLevel === "Medium") {
+                mediumQuestions++;
+            }
+            else if(question.questionLevel === "Hard") {
+                hardQuestions++;
+            }
+        });
+
+
+
 
         return res
         .status(200)
         .json(
             new ApiResponse(
                 200, 
-                "Students retrieved successfully", 
+                "Exam dashboard retrieved successfully", 
                 {
-                    students
+                    exam,
+                    students,
+                    attemptedStudents,
+                    totalStudents,
+                    questionsLevel: {
+                        easy: easyQuestions,
+                        medium: mediumQuestions,
+                        hard: hardQuestions,
+                        totalQuestionss: questions.length
+                    },
+                    questions,
+
+
                 }
             )
         )
-        
     } 
     catch (error) {
         throw new ApiError(500, error.message)
     }
 })
+
+
 
 const getUniversityDashboard = asyncHandler(async (req, res, next) => {
     try {
@@ -640,6 +731,57 @@ const getUniversityDashboard = asyncHandler(async (req, res, next) => {
     }
 });
 
+const getAllStudents = asyncHandler(async (req, res, next) => {
+    try {
+
+        const students = await Student.find();
+
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200, 
+                "Students retrieved successfully", 
+                {
+                    students
+                }
+            )
+        )
+        
+    } 
+    catch (error) {
+        throw new ApiError(500, error.message)
+    }
+})
+
+
+const getExamsOfStudent = asyncHandler(async (req, res, next) => {
+    try {
+
+        
+        const { studentId } = req.params;
+
+        const exams = await Exam.find({ students: studentId });
+        
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200, 
+                "Exams retrieved successfully", 
+                {
+                    exams
+                }
+            )
+        )
+        
+    } 
+    catch (error) {
+        throw new ApiError(500, error.message)
+    }
+})
+
+
 
 const genAI = new GoogleGenerativeAI("AIzaSyDEGudfuHZHpbQI94GGHWzoeEfVIvhbf0M");
 
@@ -777,11 +919,13 @@ export {
     getOldQuestions,
     removeQuestion,
     getExamDetails,
-    getExanDashboard,
+    getExamDashboard,
     assignExam,
     getAllStudents,
     getUniversityDashboard,
     getAiDescription,
     getStudent,
     getStudentExamDetails,
+    getStudentsParticipatingExam, 
+    getDashboardOfExam
 }
