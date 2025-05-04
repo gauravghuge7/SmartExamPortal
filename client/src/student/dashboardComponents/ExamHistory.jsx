@@ -90,7 +90,7 @@ const ExamHistory = ({ sidebarOpen, setSidebarOpen }) => {
   };
 
   const handleExamClick = (examId) => {
-    navigate(`/student/exam-history/${examId}`);
+    navigate(`/student/exam/${examId}`);
   };
 
   const sidebarItems = [

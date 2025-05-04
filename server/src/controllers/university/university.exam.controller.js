@@ -641,9 +641,11 @@ const getUniversityDashboard = asyncHandler(async (req, res, next) => {
 });
 
 
-const genAI = new GoogleGenerativeAI("AIzaSyDEGudfuHZHpbQI94GGHWzoeEfVIvhbf0M");
+
+const genAI = new GoogleGenerativeAI(`${process.env.GOOGLE_GENERATIVE_AI}`);
 
 const getAiDescription = asyncHandler(async (req, res) => {
+
     try {
         // Extract inputText from request body
         const { inputText , type } = req.body;
