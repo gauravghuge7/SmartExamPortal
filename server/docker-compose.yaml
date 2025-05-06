@@ -4,9 +4,9 @@ services:
   node-backend:
     build: .
     ports:
-      - "3000:3000"
+      - "5000:5000"
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
