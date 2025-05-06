@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 const allowOrigins = [
     "http://localhost:3000",
     "http://localhost:8080",
-    "http://localhost:5173",
+    process.env.CLIENT_URL,
 ]
 
 app.use(cors({
