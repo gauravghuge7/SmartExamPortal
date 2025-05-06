@@ -1,13 +1,20 @@
+# Use the official Node.js LTS image
+FROM node:20
 
-FROM node:22
+# Create app directory
+WORKDIR /usr/src/app
 
-WORKDIR /app
-
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
-CMD ["npm", "install"]
 
+# Copy the rest of the application
 COPY . .
-EXPOSE 5000
-CMD ["npm", "run", "start"]
+
+# Expose the application's port
+EXPOSE 3000
+
+# Run the app
+CMD ["node", "index.js"]
