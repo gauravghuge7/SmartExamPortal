@@ -7,9 +7,10 @@ import { uploadOnCloudinary } from "../../helper/cloudinary.js";
 
 
 const options = {
-    maxAge: 60 * 60 * 24 * 1000,
-    httpOnly: true,
-    secure: true,
+  maxAge: 60 * 60 * 24 * 1000,
+  httpOnly: true,
+  secure: false,
+  
 }
 
 // Create a new student
