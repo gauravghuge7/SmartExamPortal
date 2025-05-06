@@ -10,7 +10,6 @@ const options = {
     maxAge: 60 * 60 * 24 * 1000,
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
 }
 
 // Create a new student
