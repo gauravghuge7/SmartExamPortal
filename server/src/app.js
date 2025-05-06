@@ -16,16 +16,45 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-const allowOrigins = [
-    "http://localhost:3000",
-    "http://localhost:8080",
-    process.env.CLIENT_URL,
-]
+const allowedOrigins = process.env.CLIENT_URL;
+
 
 app.use(cors({
-    origin : allowOrigins,
-    credentials : true,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Allow cookies
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Accept",
+    "Origin",
+    "X-Requested-With",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Credentials",
+    "Access-Control-Allow-Methods",
+    "Access-Control-Allow-Headers"
+  ],
+  exposedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Credentials",
+    "Access-Control-Allow-Methods",
+    "Access-Control-Allow-Headers"
+  ],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
+
 
 
 // Handle preflight requests for all routes
