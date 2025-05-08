@@ -7,11 +7,12 @@ import { uploadOnCloudinary } from "../../helper/cloudinary.js";
 
 
 const options = {
-  maxAge: 60 * 60 * 24 * 1000,
   httpOnly: true,
+  // secure: process.env.NODE_ENV === 'production',
   secure: true,
-
-}
+  sameSite: 'None',
+  maxAge: 1 * 24 * 60 * 60 * 1000,
+};
 
 // Create a new student
 const registerStudent = asyncHandler(async (req, res, next) => {
